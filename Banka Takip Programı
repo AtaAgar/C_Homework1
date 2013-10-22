@@ -1,0 +1,109 @@
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <Windows.h>
+#define bool int
+#define true 1
+#define false 0
+
+
+char *mystrcmp(const char *, const char*); //stringleri eşitlemek için gerekli metot.
+
+int main()
+{
+	char kullaniciAdi[10];
+	char kullaniciAdi1[10] = "admin"; 
+	int comp_result0;
+	int comp_result1;
+	int secim;
+	char sifre[10];
+	char sifre1[10]="123456";
+	int bakiye = 5000, yatMiktar, top_bakiye, paraCek, paraGonder, hesNo;
+	int Gonder,Cek;
+	bool durum = true;
+	do
+	{
+		printf("Kullanici Adi : ");
+		gets(kullaniciAdi);
+		comp_result0 = strcmp(kullaniciAdi, kullaniciAdi1);  //Girilen string değerinin bir diğerine eşit olup olmadığına bakıyor
+		printf("\nSifre : ");
+		gets(sifre);
+		comp_result1 = strcmp(sifre,sifre1); 
+		printf("\n");
+		if((comp_result0!=0)||(comp_result1!=0))  
+		{
+			system("cls");
+			printf("Kullanici adi veya sifreniz yanlis\n");
+		}
+		else durum = false;//Döngüden çıkması icin  --->  kullanıcı adı ve şifre doğru
+		
+	} while (durum);
+	system("cls");
+	while(1)
+	{
+		printf("\n\t\tBanka Takip Sistemine Hosgeldiniz\t\n\n");
+		printf("Bakiye Ogrenme     : 1\n");
+		printf("Para Ekle	   : 2\n");
+		printf("Para Cek	   : 3\n");
+		printf("Para Gonder	   : 4\n");
+		printf("Cikis		   : 5\n");
+		printf("Lutfen yapmak istediginiz islemi secin...");
+		scanf_s("%d", &secim);
+		system("cls");
+		if (secim == 1)
+		{
+			printf("\tBankanizdaki bakiye %d tl dir\n",bakiye);
+		}
+		else if(secim == 2)
+		{
+			printf("\tYatirilacak Miktar: ");
+			scanf_s("%d", &yatMiktar); 
+			top_bakiye = bakiye + yatMiktar;
+			printf("\tParaniz Hesabiniza Yatirilmistir.\n"); 
+			printf("\tHesabinizdaki Para: %d tl dir.\n", top_bakiye);
+			bakiye = top_bakiye;
+		}
+		else if(secim == 3)
+		{
+			printf("\tCekilecek para miktari : ");
+			scanf("%d",&paraCek); 
+			if(bakiye >= paraCek)
+			{
+				printf("\tCekilen para miktari : %d\n", paraCek);
+				top_bakiye = bakiye - paraCek;
+				printf("\tHesabinizda %d tl kalmistir.\n", top_bakiye); 
+				bakiye = top_bakiye;
+			}
+			else if(bakiye < paraCek) 
+			{
+				printf("\tSadece hesabinizdaki para kadar cekebilirsiniz\n");
+			}
+		}
+		else if (secim == 4)
+		{
+			printf("\tLutfen gonderilecek para miktarini giriniz : ");
+			scanf("%d",&paraGonder);		
+		
+			if (paraGonder <= bakiye)
+			{
+				printf("\tPara transferi yapilacak hesap numarasini giriniz : ");
+				scanf_s("%d", &hesNo);
+				top_bakiye = bakiye - paraGonder;
+				printf("\tHesabinizda %d tl kalmistir.\n", top_bakiye);
+				bakiye = top_bakiye;
+			}
+			else 
+			{
+				printf("\tLutfen bakiyeniz dahilinde para transferi yapiniz.\n");
+			}
+		}
+		else if (secim == 5)
+		{
+			return 0;
+		}
+	}
+	getch();
+}
+
